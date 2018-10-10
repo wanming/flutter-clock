@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
-import 'package:flutter/services.dart';
 import 'package:screen/screen.dart';
 import './themes/classic.dart';
 import './themes/week.dart';
 
-void main() async {
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.landscapeRight
-  ]);
+void main() {
   Screen.keepOn(true);
   runApp(new MyApp());
 }
@@ -22,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         canvasColor: Colors.black
       ),
-      initialRoute: '/clocks/week',
+      initialRoute: '/clocks/classic',
       routes: <String, WidgetBuilder> {
         '/': (BuildContext context) => new Classic(),
         '/clocks/classic': (BuildContext context) => new Classic(),

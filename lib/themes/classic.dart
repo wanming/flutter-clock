@@ -19,7 +19,7 @@ class _ClassicState extends ClockBaseState<Classic> {
   @override
   Widget build(BuildContext context) {
     var _nowStyle = new TextStyle(
-        fontSize: getDeviceSize(context).height * 0.4,
+        fontSize: getFontSize(),
         color: Colors.white,
         fontFamily: 'UbuntuMono');
     return GestureDetector(
@@ -41,5 +41,30 @@ class _ClassicState extends ClockBaseState<Classic> {
 
   String _getTimeString(now) {
     return '${pad0(now.hour)}:${pad0(now.minute)}:${pad0(now.second)}';
+  }
+
+  double getFontSize () {
+    var ratio = 5;
+    double fWidth = 0.0;
+    double fHeight = 0.0;
+
+    var deviceSize = getDeviceSize(context);
+    var width = deviceSize.width;
+    var height = deviceSize.height;
+
+    if (width > height) {
+      if (width / height > ratio) {
+        fHeight = height;
+        fWidth = fHeight * ratio;
+      } else {
+        fWidth = width;
+        fHeight = fWidth / ratio;
+      }
+    } else {
+      fWidth = width;
+      fHeight = fWidth / ratio;
+    }
+
+    return fHeight / 0.9;
   }
 }

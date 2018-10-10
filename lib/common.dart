@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-const CLOCK_INTERVAL = Duration(microseconds: 200);
+const CLOCK_INTERVAL = Duration(microseconds: 1000);
 
 String pad0(int num) {
   if (num < 10) {
@@ -35,14 +35,15 @@ Future<Map<String, String>> getWeather(List<double> location) async {
   var response = await http.get(url);
   Map body = json.decode(response.body);
   // TODO: Use cond_text_n if is in night.
-  var weather = '${body['HeWeather6'][0]['daily_forecast']['cond_txt_d']}';
-  var high = '${body['HeWeather6'][0]['daily_forecast']['tmp_max']}';
-  var low = '${body['HeWeather6'][0]['daily_forecast']['tmp_min']}';
-  return <String, String>{weather: weather, high: high, low: low};
+  var weather = '${body['HeWeather6'][0]['daily_forecast'][0]['cond_txt_d']}';
+  var high = '${body['HeWeather6'][0]['daily_forecast'][0]['tmp_max']}';
+  var low = '${body['HeWeather6'][0]['daily_forecast'][0]['tmp_min']}';
+  return <String, String>{'weather': weather, 'high': high, 'low': low};
 }
 
 Future<String> getWeatherString() async {
-  var location = await getLocation();
-  var weather = await getWeather(location);
-  return '${weather['weather']}，${weather['low']}~${weather['high']}';
+  // var location = await getLocation();
+  // var weather = await getWeather(location);
+  var weather = await getWeather([114.31, 30.52]);
+  return '${weather['weather']}，${weather['low']}~${weather['high']}°C';
 }

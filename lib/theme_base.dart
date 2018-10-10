@@ -25,6 +25,10 @@ class ClockBaseState<T extends ClockBaseStatefulWidget> extends State {
 
   startClock() {
     Timer.periodic(CLOCK_INTERVAL, (Timer t) {
+      if (!mounted) {
+        return;
+      }
+
       setState(() {
         now = DateTime.now();
       });
